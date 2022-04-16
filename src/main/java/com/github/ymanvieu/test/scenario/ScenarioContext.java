@@ -44,17 +44,8 @@ public class ScenarioContext {
     }
 
     public <T extends When> T lastAction(Class<T> whenActionClass) {
-        Object whenAction = whenActionRefs.get(whenActionClass);
-        if (whenAction == null) {
-            try {
-                return whenActionClass.getConstructor().newInstance();
-            } catch (Exception e) {
-                throw new Error("Instantiation failed: " + whenActionClass, e);
-            }
-        } else {
-            //noinspection unchecked
-            return (T) whenAction;
-        }
+        //noinspection unchecked
+        return (T) whenActionRefs.get(whenActionClass);
     }
 
     public <T extends Tool> T lastToolAction(Class<T> toolActionClass) {
