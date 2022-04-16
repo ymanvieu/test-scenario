@@ -50,6 +50,20 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <url>https://maven.pkg.github.com/ymanvieu/test-scenario</url>
+    </repository>
+  </distributionManagement>
+
+  <scm>
+    <connection>scm:git:https://github.com/ymanvieu/test-scenario</connection>
+    <url>https://github.com/ymanvieu/test-scenario</url>
+    <developerConnection>scm:git:https://github.com/ymanvieu/test-scenario</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
 
   <build>
     <plugins>
