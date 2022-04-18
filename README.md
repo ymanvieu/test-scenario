@@ -2,8 +2,7 @@
 
 ## Test-scenario is a Java framework used for blackbox testing
 
-The main goal of the framework is to abstract any business/technical implementation, improving maintenability and readability of the
-test.
+The main goal of the framework is to abstract any business/technical implementation, improving tests maintenability and readability.
 
 In other words, it is a test (Scenario) with Given/When/Then steps from the [BDD](https://en.wikipedia.org/wiki/Behavior-driven_development) paradigm.
 
@@ -23,13 +22,13 @@ class SomeBusinessPerimeterScenario extends AbstractScenario {
         then(new ActionInThePerimeterVerification().returnedValue(expectedValue));
 
         // optional: indirect assertions like reading values from somewhere else in the application
-        when(GetSomeBusinessInfo().someParameter(value));
+        when(new GetSomeBusinessInfo().someParameter(value));
         then(new GetSomeBusinessInfoVerification().expectedValue(someValue));
     }
 }
 ```
 
-## installation
+## Installation
 
 pom.xml
 
@@ -52,6 +51,6 @@ pom.xml
   </dependencies>
 </project>
 ```
-## Example
+## Examples
 
 [ChampionshipScenario](src/test/java/com/github/ymanvieu/test/scenario/example/ChampionshipScenario.java)
