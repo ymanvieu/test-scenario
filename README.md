@@ -1,4 +1,4 @@
-# test-scenario [![Build](https://github.com/ymanvieu/test-scenario/actions/workflows/maven.yml/badge.svg)](https://github.com/ymanvieu/test-scenario/actions/workflows/maven.yml)
+# test-scenario [![Build](https://github.com/ymanvieu/test-scenario/workflows/Build/badge.svg)](https://github.com/ymanvieu/test-scenario/actions/workflows/maven.yml) [![Package](https://github.com/ymanvieu/test-scenario/workflows/Package/badge.svg)](https://github.com/ymanvieu/test-scenario/actions/workflows/maven-publish.yml) [![Release](https://github.com/ymanvieu/test-scenario/workflows/Release/badge.svg)](https://github.com/ymanvieu/test-scenario/actions/workflows/maven-release.yml)
 
 ### Test-scenario is a Java framework used for blackbox testing
 
@@ -29,4 +29,4 @@ class SomeBusinessPerimeterScenario extends AbstractScenario {
 ```
 
 ## Example
-https://github.com/ymanvieu/test-scenario/blob/main/src/test/java/com/github/ymanvieu/test/scenario/example/ChampionshipScenario.java
+[ChampionshipScenario](src/test/java/com/github/ymanvieu/test/scenario/example/ChampionshipScenario.java)
