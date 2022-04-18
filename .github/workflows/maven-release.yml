@@ -62,7 +62,7 @@ jobs:
 
       - name: Setup Patch version
         if: ${{github.event.inputs.releaseType == 'PATCH'}}
-        run: echo RELEASE_VERSION='${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.nextIncrementalVersion}' >> $GITHUB_ENV
+        run: echo RELEASE_VERSION='' >> $GITHUB_ENV
 
       - name: Setup ${{github.event.inputs.releaseVersion}} version
         if: ${{github.event.inputs.releaseType == 'VERSION' && github.event.inputs.releaseVersion != ''}}
