@@ -10,13 +10,15 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <!-- maven plugins -->
+    <!-- 2.22.0+ needed for running Junit5 tests -->
+    <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+    <maven-release-plugin.version>3.0.0-M5</maven-release-plugin.version>
+
     <slf4j.version>1.7.36</slf4j.version>
 
     <lombok.version>1.18.22</lombok.version>
-
-    <!-- 2.22.0+ needed for running Junit5 tests -->
-    <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
-
     <junit-jupiter.version>5.8.2</junit-jupiter.version>
     <assertj.version>3.22.0</assertj.version>
   </properties>
@@ -65,6 +67,14 @@
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>${maven-release-plugin.version}</version>
+        <configuration>
+          <tagNameFormat>@{project.version}</tagNameFormat>
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>

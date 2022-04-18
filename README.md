@@ -1,4 +1,4 @@
-# test-scenario [![Build](https://github.com/ymanvieu/test-scenario/workflows/Build/badge.svg)](https://github.com/ymanvieu/test-scenario/actions/workflows/maven.yml) [![Package](https://github.com/ymanvieu/test-scenario/workflows/Package/badge.svg)](https://github.com/ymanvieu/test-scenario/actions/workflows/maven-publish.yml) [![Release](https://github.com/ymanvieu/test-scenario/workflows/Release/badge.svg)](https://github.com/ymanvieu/test-scenario/actions/workflows/maven-release.yml)
+# test-scenario [![](https://jitpack.io/v/ymanvieu/test-scenario.svg)](https://jitpack.io/#ymanvieu/test-scenario) [![Build](https://github.com/ymanvieu/test-scenario/workflows/Build/badge.svg)](https://github.com/ymanvieu/test-scenario/actions/workflows/maven.yml) [![Release](https://github.com/ymanvieu/test-scenario/workflows/Release/badge.svg)](https://github.com/ymanvieu/test-scenario/actions/workflows/maven-release.yml)
 
 ### Test-scenario is a Java framework used for blackbox testing
 
