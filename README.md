@@ -1,5 +1,4 @@
-# test-scenario
-
+# test-scenario [![Build](https://github.com/ymanvieu/test-scenario/actions/workflows/maven.yml/badge.svg)](https://github.com/ymanvieu/test-scenario/actions/workflows/maven.yml)
 
 ### Test-scenario is a Java framework used for blackbox testing
 
