@@ -52,47 +52,4 @@ public class ScenarioContext {
         //noinspection unchecked
         return (T) toolActionRefs.get(toolActionClass);
     }
-
-
-    public static class DSL<CTX extends ScenarioContext> implements ScenarioDSL<CTX> {
-
-        private final CTX scenarioContext;
-
-        public DSL(CTX scenarioContext) {
-            this.scenarioContext = scenarioContext;
-        }
-
-        @SafeVarargs
-        @Override
-        public final ScenarioDSL<CTX> given(GivenParam<CTX>... givenParam) {
-            for (GivenParam<CTX> param : givenParam) {
-                param.create(scenarioContext);
-            }
-            return this;
-        }
-
-        @Override
-        public ScenarioDSL<CTX> when(WhenAction<CTX> whenAction) {
-            whenAction.execute(scenarioContext);
-            return this;
-        }
-
-        @Override
-        public ScenarioDSL<CTX> when(GivenParam<CTX> givenParam) {
-            givenParam.create(scenarioContext);
-            return this;
-        }
-
-        @Override
-        public ScenarioDSL<CTX> verify(ThenVerification<CTX> thenVerification) {
-            thenVerification.verify(scenarioContext);
-            return this;
-        }
-
-        @Override
-        public ScenarioDSL<CTX> util(ToolAction<CTX> toolAction) {
-            toolAction.execute(scenarioContext);
-            return this;
-        }
-    }
 }

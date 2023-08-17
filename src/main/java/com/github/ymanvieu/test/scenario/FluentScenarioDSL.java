@@ -5,35 +5,35 @@ import com.github.ymanvieu.test.scenario.then.ThenVerification;
 import com.github.ymanvieu.test.scenario.tool.ToolAction;
 import com.github.ymanvieu.test.scenario.when.WhenAction;
 
-public abstract class ScenarioDSL<CTX extends ScenarioContext> {
+public abstract class FluentScenarioDSL<CTX extends ScenarioContext> {
 
     protected abstract CTX getScenarioContext();
 
     @SafeVarargs
-    public final ScenarioDSL<CTX> given(GivenParam<CTX>... givenParam) {
+    public final FluentScenarioDSL<CTX> given(GivenParam<CTX>... givenParam) {
         for (GivenParam<CTX> param : givenParam) {
             param.create(getScenarioContext());
         }
         return this;
     }
 
-    public ScenarioDSL<CTX> when(WhenAction<CTX> whenAction) {
+    public <T extends WhenAction<CTX>> T when(T whenAction) {
         whenAction.execute(getScenarioContext());
-        return this;
+        return whenAction;
     }
 
-    public ScenarioDSL<CTX> when(GivenParam<CTX> givenParam) {
+    public <T extends GivenParam<CTX>> T when(T givenParam) {
         givenParam.create(getScenarioContext());
-        return this;
+        return givenParam;
     }
 
-    public ScenarioDSL<CTX> verify(ThenVerification<CTX> thenVerification) {
+    public <T extends ThenVerification<CTX>> T verify(T thenVerification) {
         thenVerification.verify(getScenarioContext());
-        return this;
+        return thenVerification;
     }
 
-    public ScenarioDSL<CTX> util(ToolAction<CTX> toolAction) {
+    public <T extends ToolAction<CTX>> T util(T toolAction) {
         toolAction.execute(getScenarioContext());
-        return this;
+        return toolAction;
     }
 }
