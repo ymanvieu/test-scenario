@@ -17,6 +17,11 @@ public abstract class FluentScenarioDSL<CTX extends ScenarioContext> {
         return this;
     }
 
+    public <T extends GivenParam<CTX>> T given(T givenParam) {
+        givenParam.create(getScenarioContext());
+        return givenParam;
+    }
+
     public <T extends WhenAction<CTX>> T when(T whenAction) {
         whenAction.execute(getScenarioContext());
         return whenAction;
