@@ -20,7 +20,7 @@ public class TeamScenario extends AbstractScenario {
 
     @Test
     void enrollTeam_alreadyEnrolled() {
-        String teamName = "Red bull";
+        String teamName = "Red Bull Racing";
 
         given(new Team().name(teamName));
 

@@ -49,7 +49,7 @@ class TeamScenario extends AbstractScenario {
 
     @Test
     void rejectsAnAlreadyEnrolledTeam() {
-        String teamName = "Red bull";
+        String teamName = "Red Bull Racing";
 
         given(new Team().name(teamName));
 

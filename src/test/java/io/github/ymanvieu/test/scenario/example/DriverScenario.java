@@ -33,13 +33,12 @@ public class DriverScenario extends AbstractScenario {
 
         given(williams, mercedes);
 
-        // 2021 (streamlined enrollment using a given param)
-        when(new Driver().team(williams).name(driverName));
+        // Streamlined enrollment using a given param.
+        when(new Driver().team(mercedes).name(driverName));
 
-        // 2022
         when(new EnrollDriver()
             .driverName(driverName)
-            .teamName(mercedes.name()));
+            .teamName(williams.name()));
 
         verify(new EnrollDriverVerification()
             .response(Response.DRIVER_ALREADY_ENROLLED));
@@ -49,7 +48,7 @@ public class DriverScenario extends AbstractScenario {
     void listDrivers_ok() {
         Driver georgeRussell = new Driver().name("George Russell").team(new Team().name("Mercedes"));
         Driver charlesLeclerc = new Driver().name("Charles Leclerc").team(new Team().name("Ferrari"));
-        Driver maxVerstappen = new Driver().name("Max Verstappen").team(new Team().name("Red bull"));
+        Driver maxVerstappen = new Driver().name("Max Verstappen").team(new Team().name("Red Bull Racing"));
 
         given(georgeRussell, charlesLeclerc, maxVerstappen);
 
