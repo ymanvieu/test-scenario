@@ -39,17 +39,17 @@ For example, this test checks that an existing team cannot enroll twice:
 ```java
 import org.junit.jupiter.api.Test;
 
-import com.github.ymanvieu.test.scenario.example.application.enums.Response;
-import com.github.ymanvieu.test.scenario.example.framework.AbstractScenario;
-import com.github.ymanvieu.test.scenario.example.framework.given.Team;
-import com.github.ymanvieu.test.scenario.example.framework.then.EnrollTeamVerification;
-import com.github.ymanvieu.test.scenario.example.framework.when.EnrollTeam;
+import io.github.ymanvieu.test.scenario.example.application.enums.Response;
+import io.github.ymanvieu.test.scenario.example.framework.AbstractScenario;
+import io.github.ymanvieu.test.scenario.example.framework.given.Team;
+import io.github.ymanvieu.test.scenario.example.framework.then.EnrollTeamVerification;
+import io.github.ymanvieu.test.scenario.example.framework.when.EnrollTeam;
 
 class TeamScenario extends AbstractScenario {
 
     @Test
     void rejectsAnAlreadyEnrolledTeam() {
-        String teamName = "Red bull";
+        String teamName = "Red Bull Racing";
 
         given(new Team().name(teamName));
 
@@ -77,11 +77,11 @@ callers can access that step's values.
 
 Browse the complete, executable examples:
 
-- [TeamScenario](src/test/java/com/github/ymanvieu/test/scenario/example/TeamScenario.java): team enrollment and duplicate enrollment.
-- [DriverScenario](src/test/java/com/github/ymanvieu/test/scenario/example/DriverScenario.java): driver scenarios.
-- [ChampionshipScenario](src/test/java/com/github/ymanvieu/test/scenario/example/ChampionshipScenario.java): championship scenarios combining multiple steps.
-- [Example test base](src/test/java/com/github/ymanvieu/test/scenario/example/framework/AbstractScenario.java): context initialization with JUnit.
-- [Example steps and context](src/test/java/com/github/ymanvieu/test/scenario/example/framework): application-specific implementations.
+- [TeamScenario](src/test/java/io/github/ymanvieu/test/scenario/example/TeamScenario.java): team enrollment and duplicate enrollment.
+- [DriverScenario](src/test/java/io/github/ymanvieu/test/scenario/example/DriverScenario.java): driver scenarios.
+- [ChampionshipScenario](src/test/java/io/github/ymanvieu/test/scenario/example/ChampionshipScenario.java): championship scenarios combining multiple steps.
+- [Example test base](src/test/java/io/github/ymanvieu/test/scenario/example/framework/AbstractScenario.java): context initialization with JUnit.
+- [Example steps and context](src/test/java/io/github/ymanvieu/test/scenario/example/framework): application-specific implementations.
 
 ## Local development
 
