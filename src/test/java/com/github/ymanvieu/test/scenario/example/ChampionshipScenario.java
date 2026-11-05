@@ -78,6 +78,36 @@ public class ChampionshipScenario extends AbstractScenario {
     }
 
     @Test
+    void getTeamChampionshipLeader_usesCorrectPositionPoints() {
+        Driver carlosSainz = new Driver().name("Carlos Sainz").team(ferrari);
+        Driver sergioPerez = new Driver().name("Sergio Perez").team(redBull);
+
+        given(new RaceStandings()
+            .race(Race.AUSTRALIA)
+            .standings(charlesLeclerc, maxVerstappen, sergioPerez, georgeRussell, carlosSainz));
+
+        // Ferrari: 25 + 10 = 35; Red Bull: 18 + 15 = 33.
+        when(new GetTeamChampionshipLeader());
+        verify(new GetTeamChampionshipLeaderVerification().teamName(ferrari.name()));
+    }
+
+    @Test
+    void getDriverChampionshipLeader_withTenFinishers() {
+        Driver[] finishers = new Driver[10];
+        finishers[0] = charlesLeclerc;
+        finishers[1] = maxVerstappen;
+        finishers[2] = georgeRussell;
+        for (int i = 3; i < finishers.length; i++) {
+            finishers[i] = new Driver().name("Driver " + (i + 1)).team(ferrari);
+        }
+
+        given(new RaceStandings().race(Race.AUSTRALIA).standings(finishers));
+
+        when(new GetDriverChampionshipLeader());
+        verify(new GetDriverChampionshipLeaderVerification().driverName(charlesLeclerc.name()));
+    }
+
+    @Test
     void getTeamChampionshipLeader_ok() {
         Driver carlosSainz = new Driver().name("Carlos Sainz").team(ferrari);
         Driver sergioPerez = new Driver().name("Sergio Perez").team(redBull);

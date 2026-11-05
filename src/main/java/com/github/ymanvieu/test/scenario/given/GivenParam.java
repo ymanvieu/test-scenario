@@ -1,7 +1,7 @@
 package com.github.ymanvieu.test.scenario.given;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.slf4j.Logger;
@@ -10,7 +10,7 @@ import com.github.ymanvieu.test.scenario.ScenarioContext;
 
 public abstract class GivenParam<CTX extends ScenarioContext> implements Given {
 
-    private static final Map<String, AtomicInteger> SEQUENCES = new HashMap<>();
+    private static final Map<String, AtomicInteger> SEQUENCES = new ConcurrentHashMap<>();
     protected final Logger logger;
     private boolean created;
 
@@ -33,7 +33,7 @@ public abstract class GivenParam<CTX extends ScenarioContext> implements Given {
         if (created) {
             return;
         }
-        logger.info("Start creating {}", this);
+        logger.info("Start creating {}", getClass().getSimpleName());
         try {
             internalCreate(scenarioContext);
             scenarioContext.register(this);
@@ -41,7 +41,7 @@ public abstract class GivenParam<CTX extends ScenarioContext> implements Given {
         } catch (Exception e) {
             throw new Error(getClass().getSimpleName() + ".create() failed", e);
         }
-        logger.info("Done creating {}", this);
+        logger.info("Done creating {}", getClass().getSimpleName());
     }
 
     protected abstract void internalCreate(CTX ctx) throws Exception;

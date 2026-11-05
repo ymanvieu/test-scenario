@@ -16,7 +16,7 @@ public abstract class WhenAction<CTX extends ScenarioContext> implements When {
         }
         ctx.register(this);
         executed = true;
-        logger.info("Start execution {}", this);
+        logger.info("Start execution {}", getClass().getSimpleName());
 
         try {
             internalExecute(ctx);
@@ -24,7 +24,7 @@ public abstract class WhenAction<CTX extends ScenarioContext> implements When {
             logger.error("Exception in scenario", e);
             throw new Error(getClass().getSimpleName() + ".execute() failed");
         }
-        logger.info("End execution {}", this);
+        logger.info("End execution {}", getClass().getSimpleName());
     }
 
     protected abstract void internalExecute(CTX ctx) throws Exception;

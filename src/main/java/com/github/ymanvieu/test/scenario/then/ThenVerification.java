@@ -10,9 +10,9 @@ public abstract class ThenVerification<CTX extends ScenarioContext> implements T
         if (verified) {
             return;
         }
-        verified = true;
         try {
             internalVerify(ctx);
+            verified = true;
         } catch (Exception exception) {
             throw new Error(getClass().getSimpleName() + ".verify() failed", exception);
         }

@@ -85,6 +85,6 @@ public class F1ChampionshipApplication {
     }
 
     private static Integer getPoints(int position) {
-        return position > 0 && position <= 10 ? POINTS.get(position) : 0;
+        return position > 0 && position <= 10 ? POINTS.get(position - 1) : 0;
     }
 }
