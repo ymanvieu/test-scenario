@@ -17,6 +17,8 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           server-id: central
+          mvn-server-repository-origins: |
+            central:https://central.sonatype.com
           server-username-env-var: MAVEN_CENTRAL_USERNAME
           server-password-env-var: MAVEN_CENTRAL_PASSWORD
           gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
