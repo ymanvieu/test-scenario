@@ -18,6 +18,9 @@ on:
         required: false
         #default: "X.Y.Z"
 
+permissions:
+  contents: write
+
 jobs:
   release:
 
@@ -25,13 +28,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v7
-      - name: Set up JDK 8
+        with:
+          fetch-depth: 0
+      - name: Set up JDK 17 and publishing credentials
         uses: actions/setup-java@v6
         with:
-          java-version: '8'
+          java-version: '17'
           distribution: 'temurin'
-          server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
-          settings-path: ${{ github.workspace }} # location for the settings.xml file
+          server-id: central
+          server-username-env-var: MAVEN_CENTRAL_USERNAME
+          server-password-env-var: MAVEN_CENTRAL_PASSWORD
+          gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
+          gpg-passphrase-env-var: MAVEN_GPG_PASSPHRASE
           cache: maven
 
       - name: Configure Git User
@@ -66,9 +74,15 @@ jobs:
 
       - name: Setup ${{github.event.inputs.releaseVersion}} version
         if: ${{github.event.inputs.releaseType == 'VERSION' && github.event.inputs.releaseVersion != ''}}
-        run: echo "RELEASE_VERSION=${{github.event.inputs.releaseVersion}}" >> $GITHUB_ENV
+        env:
+          REQUESTED_VERSION: ${{ inputs.releaseVersion }}
+        run: |
+          [[ "$REQUESTED_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo 'Expected release version X.Y.Z'; exit 1; }
+          echo "RELEASE_VERSION=$REQUESTED_VERSION" >> "$GITHUB_ENV"
 
       - name: Performing release
         env:
-          GITHUB_TOKEN: ${{ github.token }}
-        run: mvn -B -s $GITHUB_WORKSPACE/settings.xml -Dusername=${{env.GITHUB_TOKEN}} -Dpassword=${{env.GITHUB_TOKEN}} build-helper:parse-version release:prepare release:perform -DreleaseVersion='${{env.RELEASE_VERSION}}'
+          MAVEN_CENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          MAVEN_CENTRAL_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
+        run: mvn -B --no-transfer-progress build-helper:parse-version release:prepare release:perform -DreleaseVersion="$RELEASE_VERSION"

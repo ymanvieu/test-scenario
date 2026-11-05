@@ -1,56 +1,121 @@
-# test-scenario [![](https://jitpack.io/v/ymanvieu/test-scenario.svg)](https://jitpack.io/#ymanvieu/test-scenario) [![Build](https://github.com/ymanvieu/test-scenario/workflows/Build/badge.svg)](https://github.com/ymanvieu/test-scenario/actions/workflows/maven.yml) [![Release](https://github.com/ymanvieu/test-scenario/workflows/Release/badge.svg)](https://github.com/ymanvieu/test-scenario/actions/workflows/maven-release.yml)
+# test-scenario
 
-## Test-scenario is a Java framework used for blackbox testing
+[![Build](https://github.com/ymanvieu/test-scenario/actions/workflows/maven.yml/badge.svg)](https://github.com/ymanvieu/test-scenario/actions/workflows/maven.yml)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 
-The main goal of the framework is to abstract any business/technical implementation, improving tests maintenability and readability.
+A small Java library for writing readable black-box tests with reusable Given/When/Then steps.
 
-In other words, it is a test (Scenario) with Given/When/Then steps from the [BDD](https://en.wikipedia.org/wiki/Behavior-driven_development) paradigm.
+Move setup, application interactions, and assertions into named steps so tests describe
+business behavior. The library provides a Java DSL; your test code supplies the
+application-specific context, actions, and verifications.
+
+## Requirements
+
+- Java 17 or later.
+- Maven to build this repository.
+- A test runner such as JUnit Jupiter to execute your scenarios. The examples use JUnit Jupiter.
+
+## Installation
+
+```xml
+<dependency>
+  <groupId>io.github.ymanvieu</groupId>
+  <artifactId>test-scenario</artifactId>
+  <version>RELEASE_VERSION</version>
+  <scope>test</scope>
+</dependency>
+```
+
+## Writing scenarios
+
+A scenario typically follows three steps:
+
+1. `given(...)` creates the initial state.
+2. `when(...)` performs an action against the application.
+3. `verify(...)` checks the result, representing the Then step.
+
+For example, this test checks that an existing team cannot enroll twice:
 
 ```java
-class SomeBusinessPerimeterScenario extends AbstractScenario {
+import org.junit.jupiter.api.Test;
+
+import com.github.ymanvieu.test.scenario.example.application.enums.Response;
+import com.github.ymanvieu.test.scenario.example.framework.AbstractScenario;
+import com.github.ymanvieu.test.scenario.example.framework.given.Team;
+import com.github.ymanvieu.test.scenario.example.framework.then.EnrollTeamVerification;
+import com.github.ymanvieu.test.scenario.example.framework.when.EnrollTeam;
+
+class TeamScenario extends AbstractScenario {
 
     @Test
-    void doingSomethingInThatPerimeter() {
-        // prerequisites
-        given(new SomeOtherLinkedPerimeterAction());
+    void rejectsAnAlreadyEnrolledTeam() {
+        String teamName = "Red bull";
 
-        // action to test
-        when(new ActionInThePerimeter().someParameter(value));
+        given(new Team().name(teamName));
 
-        // assertions
-        // some direct assertions like a returned value/status of the previous action
-        then(new ActionInThePerimeterVerification().returnedValue(expectedValue));
+        when(new EnrollTeam().teamName(teamName));
 
-        // optional: indirect assertions like reading values from somewhere else in the application
-        when(new GetSomeBusinessInfo().someParameter(value));
-        then(new GetSomeBusinessInfoVerification().expectedValue(someValue));
+        verify(new EnrollTeamVerification()
+            .response(Response.TEAM_ALREADY_ENROLLED));
     }
 }
 ```
 
-## Installation
+The `example` classes above belong to this repository's test suite and are not
+included in the published library. Use them as a reference for your own steps:
 
-pom.xml
+- Extend `ScenarioContext` to hold the state and application access needed by a scenario.
+- Extend `ScenarioDSL<YourContext>` and implement `getScenarioContext()` in your test base class.
+- Extend `GivenParam<YourContext>`, `WhenAction<YourContext>`, and `ThenVerification<YourContext>` to implement reusable steps.
+- Create a fresh context before each test to keep scenarios independent.
 
-```xml
-<project>
-  [...]
-  <repositories>
-    <repository>
-      <id>jitpack.io</id>
-      <url>https://jitpack.io</url>
-    </repository>
-  </repositories>
-  [...]
-  <dependencies>
-    <dependency>
-      <groupId>com.github.ymanvieu</groupId>
-      <artifactId>test-scenario</artifactId>
-      <version>LATEST_VERSION</version>
-    </dependency>
-  </dependencies>
-</project>
+`ScenarioDSL` returns the DSL from each step for chaining.
+`FluentScenarioDSL` returns the executed step from its single-step methods so
+callers can access that step's values.
+
+### Examples
+
+Browse the complete, executable examples:
+
+- [TeamScenario](src/test/java/com/github/ymanvieu/test/scenario/example/TeamScenario.java): team enrollment and duplicate enrollment.
+- [DriverScenario](src/test/java/com/github/ymanvieu/test/scenario/example/DriverScenario.java): driver scenarios.
+- [ChampionshipScenario](src/test/java/com/github/ymanvieu/test/scenario/example/ChampionshipScenario.java): championship scenarios combining multiple steps.
+- [Example test base](src/test/java/com/github/ymanvieu/test/scenario/example/framework/AbstractScenario.java): context initialization with JUnit.
+- [Example steps and context](src/test/java/com/github/ymanvieu/test/scenario/example/framework): application-specific implementations.
+
+## Local development
+
+Clone the repository and run the build:
+
+```sh
+git clone https://github.com/ymanvieu/test-scenario.git
+cd test-scenario
+mvn -B clean verify -Dgpg.skip=true
 ```
-## Examples
 
-[ChampionshipScenario](src/test/java/com/github/ymanvieu/test/scenario/example/ChampionshipScenario.java)
+This compiles the library, runs the tests, and generates the library, sources,
+and Javadoc JARs under `target/`. Signing is skipped for local verification;
+publishing and release builds run through GitHub Actions.
+
+## Contributing
+
+Bug reports, documentation improvements, and pull requests are welcome.
+
+Before opening an [issue](https://github.com/ymanvieu/test-scenario/issues), check
+for an existing report. Include the Java version, library version, steps to
+reproduce, and the expected and actual behavior. A small reproducer helps.
+
+For a pull request:
+
+1. Fork the repository and create a branch for your change.
+2. Keep the change focused and follow the existing Java style.
+3. Add or update tests when changing behavior, and update documentation when needed.
+4. Run `mvn -B clean verify -Dgpg.skip=true`.
+5. Explain the problem, the change, and how you verified it in the pull request.
+
+Do not include credentials, private signing keys, or sensitive application data
+in issues, logs, or pull requests.
+
+## License
+
+Licensed under the [Apache License, Version 2.0](LICENSE).
